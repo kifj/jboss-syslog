@@ -6,27 +6,24 @@ Syslog facility for JBoss AS 7
 Copy the folders in modules to $JBOSS_HOME/modules and at the jar file to modules/x1/jboss-syslog/main.
 Modify the JBoss configuration in standalone/configuration/standalone.xml like this:
 
-<subsystem xmlns="urn:jboss:domain:logging:1.1">
+<pre>
+&lt;subsystem xmlns="urn:jboss:domain:logging:1.1"&gt;
     ...
-    <custom-handler name="SYSLOG" class="x1.jboss.syslog.SyslogHandler" module="x1.jboss-syslog">
-        <level name="INFO"/>
-        <!-- 
-        <formatter>
-            <pattern-formatter pattern="%-5p [%c] %s"/>
-        </formatter>
-         -->
-        <properties>
-            <property name="loghost" value="localhost"/>
-            <property name="application" value="jboss-as7"/>
-        </properties>
-    </custom-handler>
+    &lt;custom-handler name="SYSLOG" class="x1.jboss.syslog.SyslogHandler" module="x1.jboss-syslog"&gt;
+        &lt;level name="INFO"/&gt;
+        &lt;properties&gt;
+            &lt;property name="loghost" value="localhost"/>
+            &lt;property name="application" value="jboss-as7"/>
+        &lt;/properties&gt;
+    &lt;/custom-handler&gt;
     ...
-    <root-logger>
-        <level name="INFO"/>
-        <handlers>
-            <handler name="CONSOLE"/>
-            <handler name="FILE"/>
-            <handler name="SYSLOG"/>
-        </handlers>
-    </root-logger>
-</subsystem>
+    &lt;root-logger&gt;
+        &lt;level name="INFO"/&gt;
+        &lt;handlers&gt;
+            &lt;handler name="CONSOLE"/&gt;
+            &lt;handler name="FILE"/&gt;
+            &lt;handler name="SYSLOG"/&gt;
+        &lt;/handlers&gt;
+    &lt;/root-logger&gt;
+&lt;/subsystem&gt;
+</pre>
