@@ -6,15 +6,17 @@
   <version>1.0.0-SNAPSHOT</version>
   <name>jboss-syslog</name>
   <description>Syslog appender for JBoss AS 7</description>
-  <url>http://maven.x1/site/x1/jboss-syslog</url>
+  <url>https://github.com/kifj/jboss-syslog</url>
   <inceptionYear>2012</inceptionYear>
   <scm>
-    <developerConnection>scm:svn:http://www.x1/repos/x1/trunk/x1/jboss-syslog</developerConnection>
-    <url>https://www.x1/cgi-bin/viewvc.cgi/x1/trunk/x1/jboss-syslog</url>
+    <url>https://github.com/kifj/jboss-syslog</url>
+    <connection>scm:git:https://github.com/kifj/jboss-syslog.git</connection>
   </scm>
   <licenses>
     <license>
-      <distribution>GNU General Public License, version 2, with the Classpath Exception</distribution>
+      <name>GNU General Public License, version 2, with the Classpath Exception</name>
+      <distribution>repo</distribution>
+      <url>http://www.gnu.org/licenses/gpl-2.0-standalone.html</url>
     </license>
   </licenses>
   <properties>
@@ -84,7 +86,106 @@
           <target>1.6</target>
         </configuration>
       </plugin>
+     <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>findbugs-maven-plugin</artifactId>
+        <version>2.4.0</version>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>cobertura-maven-plugin</artifactId>
+        <version>2.5.1</version>
+        <configuration>
+          <formats>
+            <format>xml</format>
+            <format>html</format>
+          </formats>
+        </configuration>
+      </plugin>   
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-site-plugin</artifactId>
+        <version>3.0</version>
+        <configuration>
+          <outputEncoding>UTF-8</outputEncoding>
+          <reportPlugins>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-project-info-reports-plugin</artifactId>
+              <version>2.4</version>
+            </plugin>
+            <plugin>
+              <groupId>org.codehaus.mojo</groupId>
+              <artifactId>cobertura-maven-plugin</artifactId>
+              <version>2.5.1</version>
+                <configuration>
+                  <formats>
+                    <format>xml</format>
+                    <format>html</format>
+                  </formats>
+                </configuration>
+            </plugin>
+            <plugin>
+              <groupId>org.codehaus.mojo</groupId>
+              <artifactId>taglist-maven-plugin</artifactId>
+              <version>2.4</version>
+              <configuration>
+                <aggregate>true</aggregate>
+                <tags>
+                  <tag>TODO</tag>
+                  <tag>FIXME</tag>
+                  <tag>XXX</tag>
+                </tags>
+              </configuration>
+            </plugin>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-changelog-plugin</artifactId>
+              <version>2.2</version>
+            </plugin>
+             <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-surefire-report-plugin</artifactId>
+              <version>2.12</version>
+              <configuration>
+                <testFailureIgnore>true</testFailureIgnore>
+              </configuration>
+            </plugin>
+            <plugin>
+              <groupId>org.codehaus.mojo</groupId>
+              <artifactId>findbugs-maven-plugin</artifactId>
+              <version>2.4.0</version>
+              <configuration>
+                <xmlOutput>true</xmlOutput>
+                <excludeFilterFile>findbugs-exclude.xml</excludeFilterFile>
+              </configuration>
+            </plugin>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-checkstyle-plugin</artifactId>
+              <version>2.9.1</version>
+              <configuration>
+                <configLocation>checkstyle.xml</configLocation>
+              </configuration>
+              <reportSets>
+                <reportSet>
+                    <reports>
+                        <report>checkstyle</report>
+                    </reports>
+                </reportSet>
+              </reportSets>
+            </plugin>
+          </reportPlugins>
+        </configuration>
+      </plugin>         
     </plugins>
+   <extensions>
+      <extension>
+        <groupId>org.apache.maven.wagon</groupId>
+         <artifactId>wagon-ssh</artifactId>
+         <version>2.2</version>
+      </extension>
+    </extensions>     
   </build>
   <dependencies>
     <dependency>

@@ -40,6 +40,9 @@ import java.net.UnknownHostException;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ArrayBlockingQueue;
 
+/**
+  * Logging handler implementation for syslog
+  */
 public class SyslogHandler extends Handler {
   private Syslog sysLogger;
   private Thread pump = null;
@@ -121,9 +124,9 @@ public class SyslogHandler extends Handler {
 
     // format the message
     String msg;
-    msg = hostname + " " + application + "[" + pid + "]: " +
+    msg = hostname + " " + application + "[" + pid + "]: "
     // formatter.format(millisec) + " " +
-        slLvl + " [" + record.getLoggerName() + "] " + record.getMessage();
+        + slLvl + " [" + record.getLoggerName() + "] " + record.getMessage();
     if (msg.length() > 1024) {
       msg = msg.substring(0, 1024);
     }

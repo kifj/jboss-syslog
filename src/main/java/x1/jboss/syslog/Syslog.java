@@ -99,7 +99,7 @@ public class Syslog {
     String what = "<" + fl + ">" + msg;
 
     try {
-      DatagramPacket dp = new DatagramPacket(what.getBytes(), what.length(), addr, PORT);
+      DatagramPacket dp = new DatagramPacket(what.getBytes("UTF-8"), what.length(), addr, PORT);
       DatagramSocket s = new DatagramSocket();
       s.send(dp);
       if (!s.isClosed()) {
