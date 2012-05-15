@@ -41,19 +41,20 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ArrayBlockingQueue;
 
 /**
-  * Logging handler implementation for syslog
-  */
+ * Logging handler implementation for syslog
+ */
 public class SyslogHandler extends Handler {
-  private Syslog sysLogger;
+  private Syslog sysLogger = null;
   private Thread pump = null;
   private BooleanLatch done = new BooleanLatch();
   private BlockingQueue<LogRecord> pendingRecords = new ArrayBlockingQueue<LogRecord>(5000);
   private String loghost = "localhost";
   private String hostname = "localhost";
   private String application = "java";
-  private String pid;
+  private String pid = null;
 
   public SyslogHandler() {
+    setFormatter(new SyslogFormatter());
   }
 
   private void init() {
@@ -101,7 +102,6 @@ public class SyslogHandler extends Handler {
       return;
     }
     Level level = record.getLevel();
-    // long millisec = record.getMillis();
     int l;
     String slLvl;
 
@@ -119,14 +119,7 @@ public class SyslogHandler extends Handler {
       slLvl = "DEBUG";
     }
 
-    // SimpleDateFormat formatter = new
-    // SimpleDateFormat("yyyy/MM/dd HH:mm:ss.SSS");
-
-    // format the message
-    String msg;
-    msg = hostname + " " + application + "[" + pid + "]: "
-    // formatter.format(millisec) + " " +
-        + slLvl + " [" + record.getLoggerName() + "] " + record.getMessage();
+    String msg = hostname + " " + application + "[" + pid + "]: " + slLvl + " " + getFormatter().format(record);
     if (msg.length() > 1024) {
       msg = msg.substring(0, 1024);
     }
