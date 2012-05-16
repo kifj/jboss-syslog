@@ -33,12 +33,14 @@
  */
 package x1.jboss.syslog;
 
-import java.util.Date;
 import java.util.logging.Formatter;
 import java.util.logging.LogRecord;
 
+/**
+ * Logging formatter for Syslog
+ */
 public class SyslogFormatter extends Formatter {
-  private final Date dat = new Date();
+  //private final Date dat = new Date();
 
   /*
    * (non-Javadoc)
@@ -47,7 +49,7 @@ public class SyslogFormatter extends Formatter {
    */
   @Override
   public String format(LogRecord record) {
-    dat.setTime(record.getMillis());
+    //dat.setTime(record.getMillis());
     String source;
     if (record.getSourceClassName() != null) {
       source = record.getSourceClassName();
@@ -60,40 +62,40 @@ public class SyslogFormatter extends Formatter {
     String message = formatMessage(record);
     return " [" + source + "] " + message;
   }
-  
+
   @Override
   public synchronized String formatMessage(LogRecord record) {
     String format = record.getMessage();
     java.util.ResourceBundle catalog = record.getResourceBundle();
     if (catalog != null) {
-        try {
-            format = catalog.getString(record.getMessage());
-        } catch (java.util.MissingResourceException ex) {
-            // Drop through.  Use record message as format
-            format = record.getMessage();
-        }
+      try {
+        format = catalog.getString(record.getMessage());
+      } catch (java.util.MissingResourceException ex) {
+        // Drop through. Use record message as format
+        format = record.getMessage();
+      }
     }
     // Do the formatting.
     try {
-        Object parameters[] = record.getParameters();
-        if (parameters == null || parameters.length == 0) {
-            // No parameters.  Just return format string.
-            return format;
-        }
-        // Is it a java.text style format?
-        // Ideally we could match with
-        // Pattern.compile("\\{\\d").matcher(format).find())
-        // However the cost is 14% higher, so we cheaply check for
-        // 1 of the first 4 parameters
-        if (format.indexOf("{0") >= 0 || format.indexOf("{1") >=0 ||
-                    format.indexOf("{2") >=0|| format.indexOf("{3") >=0) {
-            return java.text.MessageFormat.format(format, parameters);
-        }
-        return String.format(format, record.getParameters());
-    } catch (Exception ex) {
-        // Formatting failed: use localized format string.
+      Object[] parameters = record.getParameters();
+      if (parameters == null || parameters.length == 0) {
+        // No parameters. Just return format string.
         return format;
+      }
+      // Is it a java.text style format?
+      // Ideally we could match with
+      // Pattern.compile("\\{\\d").matcher(format).find())
+      // However the cost is 14% higher, so we cheaply check for
+      // 1 of the first 4 parameters
+      if (format.indexOf("{0") >= 0 || format.indexOf("{1") >= 0 || format.indexOf("{2") >= 0
+          || format.indexOf("{3") >= 0) {
+        return java.text.MessageFormat.format(format, parameters);
+      }
+      return String.format(format, record.getParameters());
+    } catch (Exception ex) {
+      // Formatting failed: use localized format string.
+      return format;
     }
-}
+  }
 
 }
