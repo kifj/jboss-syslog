@@ -37,7 +37,7 @@ import java.util.logging.Formatter;
 import java.util.logging.LogRecord;
 
 /** 
- * Syslog formatter
+ * Logging formatter for Syslog
  */
 public class SyslogFormatter extends Formatter {
   //private final Date dat = new Date();
@@ -50,15 +50,7 @@ public class SyslogFormatter extends Formatter {
   @Override
   public String format(LogRecord record) {
     //dat.setTime(record.getMillis());
-    String source;
-    if (record.getSourceClassName() != null) {
-      source = record.getSourceClassName();
-      if (record.getSourceMethodName() != null) {
-        source += " " + record.getSourceMethodName();
-      }
-    } else {
-      source = record.getLoggerName();
-    }
+    String source = record.getLoggerName();
     String message = formatMessage(record);
     return " [" + source + "] " + message;
   }
@@ -81,7 +73,7 @@ public class SyslogFormatter extends Formatter {
     }
     // Do the formatting.
     try {
-      Object parameters[] = record.getParameters();
+      Object[] parameters = record.getParameters();
       if (parameters == null || parameters.length == 0) {
         // No parameters. Just return format string.
         return format;
