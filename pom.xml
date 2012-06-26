@@ -23,8 +23,8 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
   <ciManagement>
-    <system>Hudson</system>
-    <url>http://apollo.x1:9080/job/jboss-syslog/</url>
+    <system>Jenkins</system>
+    <url>http://www.x1/jenkins/job/jboss-syslog/</url>
     <notifiers>
       <notifier>
         <type>mail</type>
