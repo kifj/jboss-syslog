@@ -5,7 +5,7 @@ Syslog facility for JBoss AS 7
 
 Compile the jar file with maven: mvn package
 
-Copy the folders in modules to $JBOSS_HOME/modules and add the jar file to modules/x1/jboss-syslog/main.
+Copy the folders in modules to $JBOSS_HOME/modules and add the jar file from the target folder to $JBOSS_HOME/modules/x1/jboss-syslog/main.
 Modify the JBoss configuration in standalone/configuration/standalone.xml like this:
 
 <pre>

@@ -24,7 +24,7 @@
   </properties>
   <ciManagement>
     <system>Jenkins</system>
-    <url>http://apollo.x1:9080/job/jboss-syslog/</url>
+    <url>http://www.x1/jenkins/job/jboss-syslog/</url>
     <notifiers>
       <notifier>
         <type>mail</type>
