@@ -48,9 +48,10 @@ public class SysLogTest {
     SyslogHandler handler = new SyslogHandler();
     assertEquals("localhost", handler.getLoghost());
     handler.setLoghost("192.168.122.251");
-    assertNotNull(handler.getFormatter());
+    assertNull(handler.getFormatter());
     logger.addHandler(handler);
     logger.warning("test-1");
+    assertNotNull(handler.getFormatter());
     handler.setLevel(Level.WARNING);
     logger.log(Level.SEVERE, "test-2: {0} {1}", new Object[] { "p1", 1 });
     logger.fine("test-3");

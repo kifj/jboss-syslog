@@ -36,7 +36,7 @@ package x1.jboss.syslog;
 import java.util.logging.Formatter;
 import java.util.logging.LogRecord;
 
-/**
+/** 
  * Logging formatter for Syslog
  */
 public class SyslogFormatter extends Formatter {
@@ -63,6 +63,10 @@ public class SyslogFormatter extends Formatter {
     return " [" + source + "] " + message;
   }
 
+  /*
+   * (non-Javadoc)
+   * @see java.util.logging.Formatter#formatMessage(java.util.logging.LogRecord)
+   */
   @Override
   public synchronized String formatMessage(LogRecord record) {
     String format = record.getMessage();

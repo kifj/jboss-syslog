@@ -54,10 +54,10 @@ public class SyslogHandler extends Handler {
   private String pid = null;
 
   public SyslogHandler() {
-    setFormatter(new SyslogFormatter());
   }
 
   private void init() {
+    setFormatter(new SyslogFormatter());
     pid = ManagementFactory.getRuntimeMXBean().getName();
     LogManager manager = LogManager.getLogManager();
     String cname = getClass().getName();
