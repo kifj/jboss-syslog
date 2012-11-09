@@ -97,16 +97,19 @@ public class Syslog {
     int fl = facility | level;
 
     String what = "<" + fl + ">" + msg;
-
+    DatagramSocket s = null;
+    
     try {
-      DatagramPacket dp = new DatagramPacket(what.getBytes("UTF-8"), what.length(), addr, PORT);
-      DatagramSocket s = new DatagramSocket();
+      byte[] data = what.getBytes("UTF-8");
+      DatagramPacket dp = new DatagramPacket(data, data.length, addr, PORT);
+      s = new DatagramSocket();
       s.send(dp);
-      if (!s.isClosed()) {
-        s.close();
-      }
     } catch (IOException e) {
       logger.log(Level.WARNING, "Error sending syslog packet", e);
+    } finally {
+      if (s != null && !s.isClosed()) {
+        s.close();
+      }      
     }
   }
 
