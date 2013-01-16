@@ -72,7 +72,6 @@ public class SyslogHandler extends Handler {
 	}
 
 	private boolean init() {
-		setFormatter(new SyslogFormatter());
 		pid = ManagementFactory.getRuntimeMXBean().getName();
 		// set up the connection
 		try {
@@ -143,6 +142,9 @@ public class SyslogHandler extends Handler {
 	 */
 	@Override
 	public void close() {
+		if(this.sysLogger!=null) {
+			this.sysLogger.close();
+		}
 	}
 
 	/*
