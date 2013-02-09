@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>x1.jboss</groupId>
   <artifactId>x1.jboss-syslog</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.1-SNAPSHOT</version>
   <name>jboss-syslog</name>
   <description>Syslog appender for JBoss AS 7</description>
   <url>https://github.com/kifj/jboss-syslog</url>
