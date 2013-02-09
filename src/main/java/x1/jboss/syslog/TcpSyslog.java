@@ -37,8 +37,8 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.net.SocketException;
-import java.net.UnknownHostException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Send a message via syslog.
@@ -46,43 +46,57 @@ import java.net.UnknownHostException;
  * this code is taken from spy.jar and enhanced User: cmott
  */
 public class TcpSyslog extends Syslog {
-	private final Socket socket;
-	private final PrintStream out;
+  private Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).getParent();
+  private final Socket socket;
+  private PrintStream out;
 
-	/**
-	 * Log to a particular log host.
-	 * 
-	 * @throws SocketException
-	 */
-	public TcpSyslog(InetSocketAddress destination)
-			throws UnknownHostException, IOException {
-		super(destination);
-		this.socket = new Socket();
-		this.socket.connect(destination);
-		this.out = new PrintStream(this.socket.getOutputStream());
-	}
+  /**
+   * Log to a particular log host.
+   * 
+   * @throws SocketException
+   */
+  public TcpSyslog(InetSocketAddress destination) throws IOException {
+    super(destination);
+    this.socket = new Socket();
+    this.out = null;
+  }
 
-	/**
-	 * Send a log message.
-	 */
-	public void log(int facility, int level, String msg) {
-		int fl = facility | level;
+  /**
+   * Send a log message.
+   */
+  public void log(int facility, int level, String msg) {
+    int fl = facility | level;
+    String what = "<" + fl + ">" + msg;
+    if (!this.socket.isConnected()) {
+      try {
+        this.socket.connect(getDestination());
+        this.out = new PrintStream(this.socket.getOutputStream(), false, "UTF-8");
+      } catch (IOException e) {
+        logger.log(Level.WARNING, "Error sending syslog packet: " + e.getMessage(), e);
+        logger.log(Level.WARNING, what);
+        return;
+      }
+    }
+    out.println(what);
+    out.flush();
+  }
 
-		String what = "<" + fl + ">" + msg;
+  public void close() {
+    safeClose(out);
+    safeClose(socket);
+  }
 
-		out.println(what);
-		out.flush();
-	}
+  private void safeClose(PrintStream out) {
+    try {
+      out.close();
+    } catch (Exception e) {
+    }
+  }
 
-	public void close() {
-		safeClose(out);
-		safeClose(socket);
-	}
-	
-	private void safeClose(PrintStream out) {
-		try{out.close();}catch(Exception e) {}
-	}
-	private void safeClose(Socket out) {
-		try{out.close();}catch(Exception e) {}
-	}
+  private void safeClose(Socket out) {
+    try {
+      out.close();
+    } catch (Exception e) {
+    }
+  }
 }

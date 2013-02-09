@@ -48,38 +48,38 @@ import java.util.logging.Logger;
  * this code is taken from spy.jar and enhanced User: cmott
  */
 public class UdpSyslog extends Syslog {
-	private final DatagramSocket socket;
-	
-	private Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME)
-			.getParent();
+  private final DatagramSocket socket;
 
-	/**
-	 * Log to a particular log host.
-	 * @throws SocketException 
-	 */
-	public UdpSyslog(InetSocketAddress destination) throws UnknownHostException, SocketException {
-		super(destination);
-		this.socket = new DatagramSocket();
-	}
+  private Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).getParent();
 
-	/**
-	 * Send a log message.
-	 */
-	public void log(int facility, int level, String msg) {
-		int fl = facility | level;
+  /**
+   * Log to a particular log host.
+   * 
+   * @throws SocketException
+   */
+  public UdpSyslog(InetSocketAddress destination) throws UnknownHostException, SocketException {
+    super(destination);
+    this.socket = new DatagramSocket();
+  }
 
-		String what = "<" + fl + ">" + msg;
+  /**
+   * Send a log message.
+   */
+  public void log(int facility, int level, String msg) {
+    int fl = facility | level;
 
-		try {
-			byte[] data = what.getBytes("UTF-8");
-			DatagramPacket dp = new DatagramPacket(data, data.length, getDestination());
-			socket.send(dp);
-		} catch (IOException e) {
-			logger.log(Level.WARNING, "Error sending syslog packet: "+e.getMessage(), e);
-		}
-	}
+    String what = "<" + fl + ">" + msg;
 
-	public void close() {
-		this.socket.close();
-	}
+    try {
+      byte[] data = what.getBytes("UTF-8");
+      DatagramPacket dp = new DatagramPacket(data, data.length, getDestination());
+      socket.send(dp);
+    } catch (IOException e) {
+      logger.log(Level.WARNING, "Error sending syslog packet: " + e.getMessage(), e);
+    }
+  }
+
+  public void close() {
+    this.socket.close();
+  }
 }
