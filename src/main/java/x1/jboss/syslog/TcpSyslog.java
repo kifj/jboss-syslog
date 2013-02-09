@@ -33,28 +33,56 @@
  */
 package x1.jboss.syslog;
 
-import java.util.concurrent.locks.AbstractQueuedSynchronizer;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.net.InetSocketAddress;
+import java.net.Socket;
+import java.net.SocketException;
+import java.net.UnknownHostException;
 
 /**
- * Acts like a CountDownLatch except that it only requires a single signal to
- * fire. Because a latch is non-exclusive, it uses the shared acquire and
- * release methods.
+ * Send a message via syslog.
  * 
- * @author Jerome Dochez
+ * this code is taken from spy.jar and enhanced User: cmott
  */
-public class BooleanLatch extends AbstractQueuedSynchronizer {
-  private static final long serialVersionUID = -2380570517815530977L;
+public class TcpSyslog extends Syslog {
+	private final Socket socket;
+	private final PrintStream out;
 
-  public boolean isSignalled() {
-    return getState() != 0;
-  }
+	/**
+	 * Log to a particular log host.
+	 * 
+	 * @throws SocketException
+	 */
+	public TcpSyslog(InetSocketAddress destination)
+			throws UnknownHostException, IOException {
+		super(destination);
+		this.socket = new Socket();
+		this.socket.connect(destination);
+		this.out = new PrintStream(this.socket.getOutputStream());
+	}
 
-  public int tryAcquireShared(int ignore) {
-    return isSignalled() ? 1 : -1;
-  }
+	/**
+	 * Send a log message.
+	 */
+	public void log(int facility, int level, String msg) {
+		int fl = facility | level;
 
-  public boolean tryReleaseShared(int ignore) {
-    setState(1);
-    return true;
-  }
+		String what = "<" + fl + ">" + msg;
+
+		out.println(what);
+		out.flush();
+	}
+
+	public void close() {
+		safeClose(out);
+		safeClose(socket);
+	}
+	
+	private void safeClose(PrintStream out) {
+		try{out.close();}catch(Exception e) {}
+	}
+	private void safeClose(Socket out) {
+		try{out.close();}catch(Exception e) {}
+	}
 }

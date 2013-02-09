@@ -48,7 +48,7 @@ public class SysLogTest {
     SyslogHandler handler = new SyslogHandler();
     assertEquals("localhost", handler.getLoghost());
     handler.setLoghost("192.168.122.251");
-    assertNull(handler.getFormatter());
+    assertNotNull(handler.getFormatter());
     logger.addHandler(handler);
     logger.warning("test-1");
     assertNotNull(handler.getFormatter());
@@ -59,5 +59,4 @@ public class SysLogTest {
     Thread.sleep(500);
     handler.flush();
   }
-
 }

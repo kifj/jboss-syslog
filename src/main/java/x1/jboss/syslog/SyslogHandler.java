@@ -33,161 +33,158 @@
  */
 package x1.jboss.syslog;
 
-import java.util.logging.*;
+import java.io.IOException;
 import java.lang.management.ManagementFactory;
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.SocketException;
 import java.net.UnknownHostException;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.ArrayBlockingQueue;
+import java.util.logging.Handler;
+import java.util.logging.Level;
+import java.util.logging.LogRecord;
+import java.util.logging.Logger;
 
 /**
  * Logging handler implementation for syslog
  */
 public class SyslogHandler extends Handler {
-  private Syslog sysLogger = null;
-  private Thread pump = null;
-  private BooleanLatch done = new BooleanLatch();
-  private BlockingQueue<LogRecord> pendingRecords = new ArrayBlockingQueue<LogRecord>(5000);
-  private String loghost = "localhost";
-  private String hostname = "localhost";
-  private String application = "java";
-  private String pid = null;
+	private Syslog sysLogger = null;
+	// private Thread pump = null;
+	// private BooleanLatch done = new BooleanLatch();
+	// private BlockingQueue<LogRecord> pendingRecords = new
+	// ArrayBlockingQueue<LogRecord>(
+	// 5000);
+	private String loghost = "localhost";
+	private String protocol = "udp";
+	private int port = 514;
+	private String hostname = "localhost";
+	private String application = "java";
+	private String pid = null;
 
-  public SyslogHandler() {
-  }
+	public SyslogHandler() {
+		super();
+		setFormatter(new SyslogFormatter());
+		try {
+			InetAddress addr = InetAddress.getLocalHost();
+			hostname = addr.getHostName();
+		} catch (UnknownHostException e) {
+		}
+	}
 
-  private void init() {
-    setFormatter(new SyslogFormatter());
-    pid = ManagementFactory.getRuntimeMXBean().getName();
-    LogManager manager = LogManager.getLogManager();
-    String cname = getClass().getName();
-    String systemLogging = manager.getProperty(cname + ".useSystemLogging");
-    if (systemLogging != null && systemLogging.equals("false")) {
-      return;
-    }
-    // set up the connection
-    try {
-      sysLogger = new Syslog(loghost);
-    } catch (java.net.UnknownHostException e) {
-      Logger.getAnonymousLogger().log(Level.SEVERE, "unknown host");
-      return;
-    }
-    try {
-      InetAddress addr = InetAddress.getLocalHost();
-      hostname = addr.getHostName();
-    } catch (UnknownHostException e) {
-    }
+	private boolean init() {
+		pid = ManagementFactory.getRuntimeMXBean().getName();
+		// set up the connection
+		try {
+			if (protocol.equals("udp")) {
+				sysLogger = new UdpSyslog(new InetSocketAddress(loghost, port));
+				return true;
+			} else if (protocol.equals("tcp")) {
+				sysLogger = new TcpSyslog(new InetSocketAddress(loghost, port));
+				return true;
+			}
 
-    // start the Queue consummer thread.
-    pump = new Thread() {
-      public void run() {
-        try {
-          while (!done.isSignalled()) {
-            log();
-          }
-        } catch (RuntimeException e) {
-          Logger.getAnonymousLogger().log(Level.WARNING, "Error while logging: " + e.getMessage());
-        }
-      }
-    };
-    pump.start();
-  }
+		} catch (java.net.UnknownHostException e) {
+			Logger.getAnonymousLogger().log(Level.SEVERE,
+					"unknown host: " + e.getMessage(), e);
+		} catch (SocketException e) {
+			Logger.getAnonymousLogger().log(Level.SEVERE, e.getMessage(), e);
+		} catch (IOException e) {
+			Logger.getAnonymousLogger().log(Level.SEVERE, e.getMessage(), e);
+		}
+		return false;
+	}
 
-  private void log() {
-    LogRecord record;
+	private void log(LogRecord record) {
+		Level level = record.getLevel();
+		int l;
+		String slLvl;
 
-    try {
-      record = pendingRecords.take();
-    } catch (InterruptedException e) {
-      return;
-    }
-    Level level = record.getLevel();
-    int l;
-    String slLvl;
+		if (level.equals(Level.SEVERE)) {
+			l = Syslog.CRIT;
+			slLvl = "ERR  ";
+		} else if (level.equals(Level.WARNING)) {
+			l = Syslog.WARNING;
+			slLvl = "WARN ";
+		} else if (level.equals(Level.INFO)) {
+			l = Syslog.INFO;
+			slLvl = "INFO ";
+		} else {
+			l = Syslog.DEBUG;
+			slLvl = "DEBUG";
+		}
 
-    if (level.equals(Level.SEVERE)) {
-      l = Syslog.CRIT;
-      slLvl = "ERR  ";
-    } else if (level.equals(Level.WARNING)) {
-      l = Syslog.WARNING;
-      slLvl = "WARN ";
-    } else if (level.equals(Level.INFO)) {
-      l = Syslog.INFO;
-      slLvl = "INFO ";
-    } else {
-      l = Syslog.DEBUG;
-      slLvl = "DEBUG";
-    }
+		String msg = hostname + " " + application + "[" + pid + "]: " + slLvl
+				+ " " + getFormatter().format(record);
+		if (msg.length() > 1024) {
+			msg = msg.substring(0, 1024);
+		}
+		// send message
+		sysLogger.log(Syslog.DAEMON, l, msg);
+	}
 
-    String msg = hostname + " " + application + "[" + pid + "]: " + slLvl + " " + getFormatter().format(record);
-    if (msg.length() > 1024) {
-      msg = msg.substring(0, 1024);
-    }
-    // send message
-    sysLogger.log(Syslog.DAEMON, l, msg);
-  }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.util.logging.Handler#publish(java.util.logging.LogRecord)
+	 */
+	@Override
+	public void publish(LogRecord record) {
+		if (!init()) {
+			throw new RuntimeException("Can't configure SyslogHandler");
+		}
+		log(record);
+	}
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see java.util.logging.Handler#publish(java.util.logging.LogRecord)
-   */
-  @Override
-  public void publish(LogRecord record) {
-    if (pid == null) {
-      init();
-    }
-    if (pump == null) {
-      return;
-    }
-    try {
-      pendingRecords.add(record);
-    } catch (IllegalStateException e) {
-      // queue is full, start waiting.
-      try {
-        pendingRecords.put(record);
-      } catch (InterruptedException e1) {
-        // record is lost...
-      }
-    }
-  }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.util.logging.Handler#close()
+	 */
+	@Override
+	public void close() {
+		if(this.sysLogger!=null) {
+			this.sysLogger.close();
+		}
+	}
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see java.util.logging.Handler#close()
-   */
-  @Override
-  public void close() {
-    done.tryReleaseShared(0);
-    pump = null;
-  }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.util.logging.Handler#flush()
+	 */
+	@Override
+	public void flush() {
+	}
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see java.util.logging.Handler#flush()
-   */
-  @Override
-  public void flush() {
-    if (!pendingRecords.isEmpty()) {
-      log();
-    }
-  }
+	public String getLoghost() {
+		return loghost;
+	}
 
-  public String getLoghost() {
-    return loghost;
-  }
+	public void setLoghost(String loghost) {
+		this.loghost = loghost;
+	}
 
-  public void setLoghost(String loghost) {
-    this.loghost = loghost;
-  }
+	public String getProtocol() {
+		return protocol;
+	}
 
-  public String getApplication() {
-    return application;
-  }
+	public void setProtocol(String protocol) {
+		this.protocol = protocol;
+	}
 
-  public void setApplication(String application) {
-    this.application = application;
-  }
+	public void setPort(String port) {
+		this.port = Integer.parseInt(port);
+	}
+
+	public String getPort() {
+		return "" + this.port;
+	}
+
+	public String getApplication() {
+		return application;
+	}
+
+	public void setApplication(String application) {
+		this.application = application;
+	}
 }

@@ -8,6 +8,7 @@
   </formats>
   <fileSets>
     <fileSet>
+      <filtered>true</filtered>
       <directory>${basedir}/modules</directory>
       <outputDirectory>/</outputDirectory>
     </fileSet>
