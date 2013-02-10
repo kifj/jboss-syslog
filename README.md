@@ -5,7 +5,7 @@ Syslog facility for JBoss AS 7
 
 Compile the jar file with maven: mvn package
 
-Copy the folders in modules to $JBOSS_HOME/modules and add the jar file from the target folder to $JBOSS_HOME/modules/x1/jboss-syslog/main.
+Unzip the archive created in the target/zip folder at $JBOSS_HOME/modules.
 Modify the JBoss configuration in standalone/configuration/standalone.xml like this:
 
 <pre>
@@ -29,3 +29,9 @@ Modify the JBoss configuration in standalone/configuration/standalone.xml like t
     &lt;/root-logger&gt;
 &lt;/subsystem&gt;
 </pre>
+
+Valid properties are:
+ * loghost: hostname or IP address of the log server (default localhost)
+ * port: port of the log server (default 514)
+ * protocol: udp (default) or tcp
+ * application: name of the application, (default "java")
