@@ -128,7 +128,7 @@ public class SyslogHandler extends Handler {
   @Override
   public void publish(LogRecord record) {
     if (!init()) {
-      throw new RuntimeException("Can't configure SyslogHandler");
+      throw new IllegalStateException("Can't configure SyslogHandler");
     }
     log(record);
   }
