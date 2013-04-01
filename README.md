@@ -3,10 +3,11 @@ jboss-syslog
 
 Syslog facility for JBoss AS 7
 
-Compile the jar file with maven: mvn package
+Compile the jar file with maven: `mvn package`
 
-Unzip the archive created in the target/zip folder at $JBOSS_HOME/modules.
-Modify the JBoss configuration in standalone/configuration/standalone.xml like this:
+Unzip the archive created in the `target/zip` folder at `$JBOSS_HOME/modules`.
+
+Modify the JBoss configuration in `standalone/configuration/standalone.xml` like this:
 
 <pre>
 &lt;subsystem xmlns="urn:jboss:domain:logging:1.1"&gt;
@@ -31,6 +32,7 @@ Modify the JBoss configuration in standalone/configuration/standalone.xml like t
 </pre>
 
 Valid properties are:
+
  * loghost: hostname or IP address of the log server (default localhost)
  * port: port of the log server (default 514)
  * protocol: udp (default) or tcp
