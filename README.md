@@ -15,9 +15,9 @@ Modify the JBoss configuration in `standalone/configuration/standalone.xml` like
     &lt;custom-handler name="SYSLOG" class="x1.jboss.syslog.SyslogHandler" module="x1.jboss-syslog"&gt;
         &lt;level name="INFO"/&gt;
         &lt;properties&gt;
-            &lt;property name="loghost" value="localhost"/>
-            &lt;property name="application" value="jboss-as7"/>
-	    &lt;property name="facility" value="daemon"/>
+            &lt;property name="loghost" value="localhost"/&gt;
+            &lt;property name="application" value="jboss-as7"/&gt;
+            &lt;property name="facility" value="daemon"/&gt;
         &lt;/properties&gt;
     &lt;/custom-handler&gt;
     ...
