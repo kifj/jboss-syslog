@@ -36,6 +36,7 @@ package x1.jboss.syslog;
 import java.net.InetSocketAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.util.HashMap;
 
 /**
  * Send a message via syslog.
@@ -72,6 +73,31 @@ public abstract class Syslog {
   public static final int LOCAL5 = 168;
   public static final int LOCAL6 = 176;
   public static final int LOCAL7 = 184;
+
+  public static final HashMap facilityMap = new HashMap();
+
+  static {
+     facilityMap.put("kern", KERN);
+     facilityMap.put("user", USER);
+     facilityMap.put("mail", MAIL);
+     facilityMap.put("daemon", DAEMON);
+     facilityMap.put("auth", AUTH);
+     facilityMap.put("syslog", SYSLOG);
+     facilityMap.put("lpr", LPR);
+     facilityMap.put("news", NEWS);
+     facilityMap.put("uucp", UUCP);
+     facilityMap.put("cron", CRON);
+     facilityMap.put("authpriv", AUTHPRIV);
+     facilityMap.put("ftp", FTP);
+     facilityMap.put("local0", LOCAL0);
+     facilityMap.put("local1", LOCAL1);
+     facilityMap.put("local2", LOCAL2);
+     facilityMap.put("local3", LOCAL3);
+     facilityMap.put("local4", LOCAL4);
+     facilityMap.put("local5", LOCAL5);
+     facilityMap.put("local6", LOCAL6);
+     facilityMap.put("local7", LOCAL7);
+  }
 
   private final InetSocketAddress destination;
 
