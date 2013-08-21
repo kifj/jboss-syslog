@@ -17,6 +17,7 @@ Modify the JBoss configuration in `standalone/configuration/standalone.xml` like
         &lt;properties&gt;
             &lt;property name="loghost" value="localhost"/>
             &lt;property name="application" value="jboss-as7"/>
+	    &lt;property name="facility" value="daemon"/>
         &lt;/properties&gt;
     &lt;/custom-handler&gt;
     ...
@@ -36,4 +37,5 @@ Valid properties are:
  * loghost: hostname or IP address of the log server (default localhost)
  * port: port of the log server (default 514)
  * protocol: udp (default) or tcp
- * application: name of the application, (default "java")
+ * application: name of the application (default "java")
+ * facility: name of syslog facility (default "daemon")
