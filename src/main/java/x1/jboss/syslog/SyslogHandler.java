@@ -60,6 +60,8 @@ public class SyslogHandler extends Handler {
   private String hostname = "localhost";
   private String application = "java";
   private String pid = null;
+  private String facility = "daemon";
+  private int facilityInt = Syslog.DAEMON;
 
   public SyslogHandler() {
     super();
@@ -117,7 +119,7 @@ public class SyslogHandler extends Handler {
       msg = msg.substring(0, 1024);
     }
     // send message
-    sysLogger.log(Syslog.DAEMON, l, msg);
+    sysLogger.log(this.facilityInt, l, msg);
   }
 
   /*
@@ -184,5 +186,18 @@ public class SyslogHandler extends Handler {
 
   public void setApplication(String application) {
     this.application = application;
+  }
+  
+  public String getFacility() {
+    return this.facility;
+  }
+  
+  public void setFacility(String facility) {
+    if (Syslog.facilityMap.containsKey(facility)) {
+      this.facility = facility;
+      this.facilityInt = (Integer)Syslog.facilityMap.get(facility);
+    }
+    else
+      throw new IllegalArgumentException("Illegal syslog facility name: " + facility);
   }
 }
