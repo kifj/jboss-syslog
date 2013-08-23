@@ -193,9 +193,9 @@ public class SyslogHandler extends Handler {
   }
   
   public void setFacility(String facility) {
-    if (Syslog.facilityMap.containsKey(facility)) {
+    if (Syslog.FACILITY_MAP.containsKey(facility)) {
       this.facility = facility;
-      this.facilityInt = (Integer)Syslog.facilityMap.get(facility);
+      this.facilityInt = (Integer)Syslog.FACILITY_MAP.get(facility);
     }
     else
       throw new IllegalArgumentException("Illegal syslog facility name: " + facility);

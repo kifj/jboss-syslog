@@ -37,6 +37,7 @@ import java.net.InetSocketAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Send a message via syslog.
@@ -74,29 +75,29 @@ public abstract class Syslog {
   public static final int LOCAL6 = 176;
   public static final int LOCAL7 = 184;
 
-  public static final HashMap facilityMap = new HashMap();
+  public static final Map<String, Integer> FACILITY_MAP = new HashMap<String, Integer>();
 
   static {
-     facilityMap.put("kern", KERN);
-     facilityMap.put("user", USER);
-     facilityMap.put("mail", MAIL);
-     facilityMap.put("daemon", DAEMON);
-     facilityMap.put("auth", AUTH);
-     facilityMap.put("syslog", SYSLOG);
-     facilityMap.put("lpr", LPR);
-     facilityMap.put("news", NEWS);
-     facilityMap.put("uucp", UUCP);
-     facilityMap.put("cron", CRON);
-     facilityMap.put("authpriv", AUTHPRIV);
-     facilityMap.put("ftp", FTP);
-     facilityMap.put("local0", LOCAL0);
-     facilityMap.put("local1", LOCAL1);
-     facilityMap.put("local2", LOCAL2);
-     facilityMap.put("local3", LOCAL3);
-     facilityMap.put("local4", LOCAL4);
-     facilityMap.put("local5", LOCAL5);
-     facilityMap.put("local6", LOCAL6);
-     facilityMap.put("local7", LOCAL7);
+     FACILITY_MAP.put("kern", KERN);
+     FACILITY_MAP.put("user", USER);
+     FACILITY_MAP.put("mail", MAIL);
+     FACILITY_MAP.put("daemon", DAEMON);
+     FACILITY_MAP.put("auth", AUTH);
+     FACILITY_MAP.put("syslog", SYSLOG);
+     FACILITY_MAP.put("lpr", LPR);
+     FACILITY_MAP.put("news", NEWS);
+     FACILITY_MAP.put("uucp", UUCP);
+     FACILITY_MAP.put("cron", CRON);
+     FACILITY_MAP.put("authpriv", AUTHPRIV);
+     FACILITY_MAP.put("ftp", FTP);
+     FACILITY_MAP.put("local0", LOCAL0);
+     FACILITY_MAP.put("local1", LOCAL1);
+     FACILITY_MAP.put("local2", LOCAL2);
+     FACILITY_MAP.put("local3", LOCAL3);
+     FACILITY_MAP.put("local4", LOCAL4);
+     FACILITY_MAP.put("local5", LOCAL5);
+     FACILITY_MAP.put("local6", LOCAL6);
+     FACILITY_MAP.put("local7", LOCAL7);
   }
 
   private final InetSocketAddress destination;
