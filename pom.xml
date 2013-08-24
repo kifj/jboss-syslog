@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>x1.jboss</groupId>
   <artifactId>x1.jboss-syslog</artifactId>
-  <version>1.0.1-SNAPSHOT</version>
+  <version>1.0.3-SNAPSHOT</version>
   <name>jboss-syslog</name>
   <description>Syslog appender for JBoss AS 7</description>
   <url>https://github.com/kifj/jboss-syslog</url>
@@ -50,12 +50,10 @@
     </site>
     <repository>
       <id>x1-repo</id>
-      <name>X1 Maven Repository</name>
       <url>http://www.x1/nexus/content/repositories/x1-repo</url>
     </repository>
     <snapshotRepository>
       <id>x1-snapshot-repo</id>
-      <name>X1 Maven Snapshot Repository</name>
       <url>http://www.x1/nexus/content/repositories/x1-snapshot-repo</url>
     </snapshotRepository>
   </distributionManagement>
