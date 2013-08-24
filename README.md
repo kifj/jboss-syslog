@@ -1,7 +1,9 @@
 jboss-syslog
 ============
 
-Syslog facility for JBoss AS 7
+Syslog facility for JBoss AS 7.1
+
+Please note that JBoss EAP 6.1 contains a syslog module, which makes this addition obsolete.
 
 Compile the jar file with maven: `mvn package`
 
