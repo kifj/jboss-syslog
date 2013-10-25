@@ -62,6 +62,7 @@ public class SyslogHandler extends Handler {
   private String pid = null;
   private String facility = "daemon";
   private int facilityInt = Syslog.DAEMON;
+  private Level level = Level.INFO;
 
   public SyslogHandler() {
     super();
@@ -100,26 +101,28 @@ public class SyslogHandler extends Handler {
     int l;
     String slLvl;
 
-    if (level.equals(Level.SEVERE)) {
-      l = Syslog.CRIT;
-      slLvl = "ERR  ";
-    } else if (level.equals(Level.WARNING)) {
-      l = Syslog.WARNING;
-      slLvl = "WARN ";
-    } else if (level.equals(Level.INFO)) {
-      l = Syslog.INFO;
-      slLvl = "INFO ";
-    } else {
-      l = Syslog.DEBUG;
-      slLvl = "DEBUG";
+    if (level.intValue() >= getLevel().intValue()) {
+        if (level.equals(Level.SEVERE)) {
+            l = Syslog.CRIT;
+            slLvl = "ERR  ";
+        } else if (level.equals(Level.WARNING)) {
+            l = Syslog.WARNING;
+            slLvl = "WARN ";
+        } else if (level.equals(Level.INFO)) {
+            l = Syslog.INFO;
+            slLvl = "INFO ";
+        } else {
+            l = Syslog.DEBUG;
+            slLvl = "DEBUG";
+        }
+        String msg = hostname + " " + application + "[" + pid + "]: " + slLvl + " " + getFormatter().format(record);
+        if (msg.length() > 1024) {
+            msg = msg.substring(0, 1024);
+        }
+        // send message
+        sysLogger.log(this.facilityInt, l, msg);
     }
 
-    String msg = hostname + " " + application + "[" + pid + "]: " + slLvl + " " + getFormatter().format(record);
-    if (msg.length() > 1024) {
-      msg = msg.substring(0, 1024);
-    }
-    // send message
-    sysLogger.log(this.facilityInt, l, msg);
   }
 
   /*
@@ -199,5 +202,13 @@ public class SyslogHandler extends Handler {
     } else {
       throw new IllegalArgumentException("Illegal syslog facility name: " + facility);
     }
+  }
+
+  public void setLevel(Level level) {
+      this.level = level;
+  }
+
+  public Level getLevel() {
+      return level;
   }
 }
