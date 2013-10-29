@@ -76,22 +76,26 @@ public class SyslogHandler extends Handler {
 
   private boolean init() {
     pid = ManagementFactory.getRuntimeMXBean().getName();
-    // set up the connection
-    try {
-      if (protocol.equals("udp")) {
-        sysLogger = new UdpSyslog(new InetSocketAddress(loghost, port));
-        return true;
-      } else if (protocol.equals("tcp")) {
-        sysLogger = new TcpSyslog(new InetSocketAddress(loghost, port));
-        return true;
-      }
+    if (sysLogger == null) {
+      // set up the connection
+      try {
+        if (protocol.equals("udp")) {
+          sysLogger = new UdpSyslog(new InetSocketAddress(loghost, port));
+          return true;
+        } else if (protocol.equals("tcp")) {
+          sysLogger = new TcpSyslog(new InetSocketAddress(loghost, port));
+          return true;
+        }
 
-    } catch (java.net.UnknownHostException e) {
-      Logger.getAnonymousLogger().log(Level.SEVERE, "unknown host: " + e.getMessage(), e);
-    } catch (SocketException e) {
-      Logger.getAnonymousLogger().log(Level.SEVERE, e.getMessage(), e);
-    } catch (IOException e) {
-      Logger.getAnonymousLogger().log(Level.SEVERE, e.getMessage(), e);
+      } catch (java.net.UnknownHostException e) {
+        Logger.getAnonymousLogger().log(Level.SEVERE, "unknown host: " + e.getMessage(), e);
+      } catch (SocketException e) {
+        Logger.getAnonymousLogger().log(Level.SEVERE, e.getMessage(), e);
+      } catch (IOException e) {
+        Logger.getAnonymousLogger().log(Level.SEVERE, e.getMessage(), e);
+      }
+    } else {
+        return true;
     }
     return false;
   }
