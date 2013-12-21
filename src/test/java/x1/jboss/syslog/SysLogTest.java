@@ -42,42 +42,42 @@ import org.junit.Test;
 
 public class SysLogTest {
 
-  @Test
-  public void testUdpLogger() throws Exception {
-    Logger logger = Logger.getLogger(SysLogTest.class.getName());
-    SyslogHandler handler = new SyslogHandler();
-    assertEquals("localhost", handler.getLoghost());
-    assertEquals("udp", handler.getProtocol());
-    handler.setLoghost("192.168.122.251");
-    assertNotNull(handler.getFormatter());
-    logger.addHandler(handler);
-    logger.warning("test-1");
-    assertNotNull(handler.getFormatter());
-    handler.setLevel(Level.WARNING);
-    logger.log(Level.SEVERE, "test-2: {0} {1}", new Object[] { "p1", 1 });
-    logger.fine("test-3");
-    logger.log(Level.WARNING, "test-4: %s %d", new Object[] { "p1", 1 });
-    Thread.sleep(500);
-    handler.flush();
-  }
-  
-  @Test
-  public void testTcpLogger() throws Exception {
-    Logger logger = Logger.getLogger(SysLogTest.class.getName());
-    SyslogHandler handler = new SyslogHandler();
-    handler.setProtocol("tcp");
-    assertEquals("localhost", handler.getLoghost());
-    assertEquals("tcp", handler.getProtocol());
-    handler.setLoghost("192.168.122.251");
-    assertNotNull(handler.getFormatter());
-    logger.addHandler(handler);
-    logger.warning("test-1");
-    assertNotNull(handler.getFormatter());
-    handler.setLevel(Level.WARNING);
-    logger.log(Level.SEVERE, "test-2: {0} {1}", new Object[] { "p1", 1 });
-    logger.fine("test-3");
-    logger.log(Level.WARNING, "test-4: %s %d", new Object[] { "p1", 1 });
-    Thread.sleep(500);
-    handler.flush();
-  }
+	@Test
+	public void testUdpLogger() throws Exception {
+		Logger logger = Logger.getLogger(SysLogTest.class.getName());
+		SyslogHandler handler = new SyslogHandler();
+		assertEquals("localhost", handler.getLoghost());
+		assertEquals("udp", handler.getProtocol());
+		handler.setLoghost("127.0.0.1");
+		assertNotNull(handler.getFormatter());
+		logger.addHandler(handler);
+		logger.warning("test-1");
+		assertNotNull(handler.getFormatter());
+		handler.setLevel(Level.WARNING);
+		logger.log(Level.SEVERE, "test-2: {0} {1}", new Object[] { "p1", 1 });
+		logger.fine("test-3");
+		logger.log(Level.WARNING, "test-4: %s %d", new Object[] { "p1", 1 });
+		Thread.sleep(500);
+		handler.flush();
+	}
+
+	@Test
+	public void testTcpLogger() throws Exception {
+		Logger logger = Logger.getLogger(SysLogTest.class.getName());
+		SyslogHandler handler = new SyslogHandler();
+		handler.setProtocol("tcp");
+		assertEquals("localhost", handler.getLoghost());
+		assertEquals("tcp", handler.getProtocol());
+		handler.setLoghost("127.0.0.1");
+		assertNotNull(handler.getFormatter());
+		logger.addHandler(handler);
+		logger.warning("test-1");
+		assertNotNull(handler.getFormatter());
+		handler.setLevel(Level.WARNING);
+		logger.log(Level.SEVERE, "test-2: {0} {1}", new Object[] { "p1", 1 });
+		logger.fine("test-3");
+		logger.log(Level.WARNING, "test-4: %s %d", new Object[] { "p1", 1 });
+		Thread.sleep(500);
+		handler.flush();
+	}
 }
