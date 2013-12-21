@@ -119,7 +119,8 @@ public class SyslogHandler extends Handler {
 				l = Syslog.DEBUG;
 				slLvl = "DEBUG";
 			}
-			String msg = hostname + " " + application + "[" + pid + "]: " + slLvl + " " + getFormatter().format(record);
+			String msg = hostname + " " + application + "[" + Long.parseLong(pid.split("@")[0]) + "]: " + slLvl + " "
+					+ getFormatter().format(record);
 			if (msg.length() > 1024) {
 				msg = msg.substring(0, 1024);
 			}
