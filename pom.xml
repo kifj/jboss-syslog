@@ -44,9 +44,9 @@
   </ciManagement>
   <distributionManagement>
     <site>
-      <id>jboss-syslog.x1.website</id>
+      <id>x1-website</id>
       <name>X1 Website</name>
-      <url>scp://joe@www.x1/var/maven/site/x1/jboss-syslog</url>
+      <url>ftp://test4echo.x1/ftp/pub/maven/site/x1/jboss-syslog</url>
     </site>
     <repository>
       <id>x1-repo</id>
@@ -128,7 +128,7 @@
             </goals>
           </execution>
         </executions>
-      </plugin>   
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
@@ -138,7 +138,7 @@
             <jacoco-agent.destfile>target/jacoco.exec</jacoco-agent.destfile>
           </systemPropertyVariables>
         </configuration>
-      </plugin>       
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-site-plugin</artifactId>
@@ -189,7 +189,7 @@
                     <report>report-only</report>
                   </reports>
                 </reportSet>
-              </reportSets>	      
+              </reportSets>
             </plugin>
             <plugin>
               <groupId>org.codehaus.mojo</groupId>
@@ -227,8 +227,8 @@
    <extensions>
       <extension>
         <groupId>org.apache.maven.wagon</groupId>
-         <artifactId>wagon-ssh</artifactId>
-         <version>2.5</version>
+        <artifactId>wagon-ftp</artifactId>
+        <version>2.6</version>
       </extension>
     </extensions>     
   </build>
