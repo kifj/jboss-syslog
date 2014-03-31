@@ -36,8 +36,8 @@ Modify the JBoss configuration in `standalone/configuration/standalone.xml` like
 
 Valid properties are:
 
- * loghost: hostname or IP address of the log server (default localhost)
- * port: port of the log server (default 514)
+ * loghost: hostname or IP address of the log server (default: localhost)
+ * port: port of the log server (default: 514)
  * protocol: udp (default) or tcp
- * application: name of the application (default "java")
- * facility: name of syslog facility (default "daemon")
+ * application: name of the application (default: java)
+ * facility: name of the syslog facility (default: daemon)
