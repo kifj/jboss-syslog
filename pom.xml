@@ -107,7 +107,7 @@
      <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>findbugs-maven-plugin</artifactId>
-        <version>2.5.4</version>
+        <version>3.0.0</version>
       </plugin>
       <plugin>
         <groupId>org.jacoco</groupId>
@@ -194,7 +194,7 @@
             <plugin>
               <groupId>org.codehaus.mojo</groupId>
               <artifactId>findbugs-maven-plugin</artifactId>
-              <version>2.5.4</version>
+              <version>3.0.0</version>
               <configuration>
                 <xmlOutput>true</xmlOutput>
                 <excludeFilterFile>findbugs-exclude.xml</excludeFilterFile>
@@ -203,7 +203,7 @@
             <plugin>
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-checkstyle-plugin</artifactId>
-              <version>2.12.1</version>
+              <version>2.13</version>
               <configuration>
                 <configLocation>checkstyle.xml</configLocation>
               </configuration>
@@ -221,7 +221,7 @@
       <plugin> 
         <groupId>org.apache.maven.plugins</groupId> 
         <artifactId>maven-release-plugin</artifactId> 
-        <version>2.4.2</version> 
+        <version>2.5.1</version> 
       </plugin>    
     </plugins>
     <extensions>
