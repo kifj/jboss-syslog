@@ -57,7 +57,7 @@ public class SyslogHandler extends Handler {
 	private String loghost = "localhost";
 	private String protocol = "udp";
 	private int port = 514;
-	private String hostname = "localhost";
+	private static String hostname = null;
 	private String application = "java";
 	private String pid = null;
 	private String facility = "daemon";
@@ -67,10 +67,13 @@ public class SyslogHandler extends Handler {
 	public SyslogHandler() {
 		super();
 		setFormatter(new SyslogFormatter());
-		try {
-			InetAddress addr = InetAddress.getLocalHost();
-			hostname = addr.getHostName();
-		} catch (UnknownHostException e) {
+		if (hostname == null) {
+			try {
+				InetAddress addr = InetAddress.getLocalHost();
+				hostname = addr.getHostName();
+			} catch (UnknownHostException e) {
+				hostname = "localhost";
+			}
 		}
 	}
 
