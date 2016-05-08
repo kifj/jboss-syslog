@@ -41,7 +41,7 @@ import java.util.Map;
 
 /**
  * Send a message via syslog.
- * 
+ *
  * this code is taken from spy.jar and enhanced User: cmott
  */
 public abstract class Syslog {
@@ -75,7 +75,7 @@ public abstract class Syslog {
 	public static final int LOCAL6 = 176;
 	public static final int LOCAL7 = 184;
 
-	public static final Map<String, Integer> FACILITY_MAP = new HashMap<String, Integer>();
+	static final Map<String, Integer> FACILITY_MAP = new HashMap<String, Integer>();
 
 	static {
 		FACILITY_MAP.put("kern", KERN);
@@ -104,7 +104,7 @@ public abstract class Syslog {
 
 	/**
 	 * Log to a particular log host.
-	 * 
+	 *
 	 * @throws SocketException
 	 */
 	public Syslog(InetSocketAddress destination) throws UnknownHostException, SocketException {
