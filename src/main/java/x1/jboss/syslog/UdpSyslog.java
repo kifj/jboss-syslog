@@ -48,44 +48,46 @@ import java.util.logging.Logger;
  * this code is taken from spy.jar and enhanced User: cmott
  */
 public class UdpSyslog extends Syslog {
-	private final DatagramSocket socket;
-	private final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).getParent();
+  private final DatagramSocket socket;
+  private final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).getParent();
 
-	/**
-	 * Log to a particular log host.
-	 * 
-	 * @throws SocketException
-	 */
-	public UdpSyslog(InetSocketAddress destination) throws UnknownHostException, SocketException {
-		super(destination);
-		this.socket = new DatagramSocket();
-	}
+  /**
+   * Log to a particular log host.
+   * 
+   * @throws SocketException
+   */
+  public UdpSyslog(InetSocketAddress destination) throws UnknownHostException, SocketException {
+    super(destination);
+    this.socket = new DatagramSocket();
+  }
 
-	/**
-	 * Send a log message.
-	 */
-	public void log(int facility, int level, String msg) {
-		int fl = facility | level;
+  /**
+   * Send a log message.
+   */
+  @Override
+  public void log(int facility, int level, String msg) {
+    int fl = facility | level;
 
-		String what = "<" + fl + ">" + msg;
+    String what = "<" + fl + ">" + msg;
 
-		try {
-			byte[] data = what.getBytes("UTF-8");
-			DatagramPacket dp = new DatagramPacket(data, data.length, getDestination());
-			socket.send(dp);
-		} catch (IOException e) {
-			logger.log(Level.WARNING, "Error sending syslog packet: " + e.getMessage(), e);
-		}
-	}
+    try {
+      byte[] data = what.getBytes("UTF-8");
+      DatagramPacket dp = new DatagramPacket(data, data.length, getDestination());
+      socket.send(dp);
+    } catch (IOException e) {
+      logger.log(Level.WARNING, "Error sending syslog packet: " + e.getMessage(), e);
+    }
+  }
 
-	public void close() {
-		safeClose(this.socket);
-	}
+  @Override
+  public void close() {
+    safeClose(this.socket);
+  }
 
-	private void safeClose(DatagramSocket out) {
-		try {
-			out.close();
-		} catch (Exception e) {
-		}
-	}
+  private void safeClose(DatagramSocket out) {
+    try {
+      out.close();
+    } catch (Exception e) {
+    }
+  }
 }

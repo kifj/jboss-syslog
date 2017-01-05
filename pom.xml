@@ -104,7 +104,7 @@
           </execution>
         </executions>
       </plugin>
-     <plugin>
+      <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>findbugs-maven-plugin</artifactId>
         <version>3.0.3</version>
@@ -152,7 +152,7 @@
               <version>2.9</version>
               <configuration>
                 <dependencyLocationsEnabled>false</dependencyLocationsEnabled>
-              </configuration>              
+              </configuration>
             </plugin>
             <plugin>
               <groupId>org.jacoco</groupId>
@@ -176,7 +176,7 @@
               <artifactId>maven-changelog-plugin</artifactId>
               <version>2.2</version>
             </plugin>
-             <plugin>
+            <plugin>
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-surefire-report-plugin</artifactId>
               <version>2.19.1</version>
@@ -209,20 +209,20 @@
               </configuration>
               <reportSets>
                 <reportSet>
-                    <reports>
-                        <report>checkstyle</report>
-                    </reports>
+                  <reports>
+                    <report>checkstyle</report>
+                  </reports>
                 </reportSet>
               </reportSets>
             </plugin>
           </reportPlugins>
         </configuration>
       </plugin>
-      <plugin> 
-        <groupId>org.apache.maven.plugins</groupId> 
-        <artifactId>maven-release-plugin</artifactId> 
-        <version>2.5.1</version> 
-      </plugin>    
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-release-plugin</artifactId>
+        <version>2.5.1</version>
+      </plugin>
     </plugins>
     <extensions>
       <extension>
@@ -230,7 +230,7 @@
         <artifactId>wagon-webdav-jackrabbit</artifactId>
         <version>2.4</version>
       </extension>
-    </extensions>     
+    </extensions>
   </build>
   <dependencies>
     <dependency>
