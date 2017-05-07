@@ -1,5 +1,7 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
   <modelVersion>4.0.0</modelVersion>
   <groupId>x1.jboss</groupId>
   <artifactId>jboss-syslog</artifactId>
@@ -10,18 +12,23 @@
   <inceptionYear>2012</inceptionYear>
   <scm>
     <url>https://github.com/kifj/jboss-syslog</url>
-    <connection>scm:git:https://github.com/kifj/jboss-syslog.git</connection>
+    <connection>
+    scm:git:https://github.com/kifj/jboss-syslog.git</connection>
   </scm>
   <licenses>
     <license>
-      <name>GNU General Public License, version 2, with the Classpath Exception</name>
+      <name>GNU General Public License, version 2, with the
+      Classpath Exception</name>
       <distribution>repo</distribution>
-      <url>http://www.gnu.org/licenses/gpl-2.0-standalone.html</url>
+      <url>
+      http://www.gnu.org/licenses/gpl-2.0-standalone.html</url>
     </license>
   </licenses>
   <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <project.build.sourceEncoding>
+    UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>
+    UTF-8</project.reporting.outputEncoding>
     <maven.compiler.target>1.7</maven.compiler.target>
     <maven.compiler.source>1.7</maven.compiler.source>
     <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
@@ -46,7 +53,8 @@
     <site>
       <id>x1-site</id>
       <name>X1 Maven Site</name>
-      <url>dav:http://www.x1/nexus/content/repositories/x1-site/${project.groupId}/${project.artifactId}/${project.version}</url>
+      <url>
+      dav:http://www.x1/nexus/content/repositories/x1-site/${project.groupId}/${project.artifactId}/${project.version}</url>
     </site>
     <repository>
       <id>x1-repo</id>
@@ -54,7 +62,8 @@
     </repository>
     <snapshotRepository>
       <id>x1-snapshot-repo</id>
-      <url>http://www.x1/nexus/content/repositories/x1-snapshot-repo</url>
+      <url>
+      http://www.x1/nexus/content/repositories/x1-snapshot-repo</url>
     </snapshotRepository>
   </distributionManagement>
   <organization>
@@ -82,7 +91,7 @@
     <plugins>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.3</version>
+        <version>3.5</version>
       </plugin>
       <plugin>
         <artifactId>maven-assembly-plugin</artifactId>
@@ -112,7 +121,7 @@
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
-        <version>0.7.6.201602180812</version>
+        <version>0.7.7.201606060606</version>
         <executions>
           <execution>
             <id>prepare-agent</id>
@@ -132,91 +141,18 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
-        <version>2.19.1</version>
+        <version>2.20</version>
         <configuration>
           <systemPropertyVariables>
-            <jacoco-agent.destfile>target/jacoco.exec</jacoco-agent.destfile>
+            <jacoco-agent.destfile>
+            target/jacoco.exec</jacoco-agent.destfile>
           </systemPropertyVariables>
         </configuration>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-site-plugin</artifactId>
-        <version>3.4</version>
-        <configuration>
-          <outputEncoding>UTF-8</outputEncoding>
-          <reportPlugins>
-            <plugin>
-              <groupId>org.apache.maven.plugins</groupId>
-              <artifactId>maven-project-info-reports-plugin</artifactId>
-              <version>2.9</version>
-              <configuration>
-                <dependencyLocationsEnabled>false</dependencyLocationsEnabled>
-              </configuration>
-            </plugin>
-            <plugin>
-              <groupId>org.jacoco</groupId>
-              <artifactId>jacoco-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-              <groupId>org.codehaus.mojo</groupId>
-              <artifactId>taglist-maven-plugin</artifactId>
-              <version>2.4</version>
-              <configuration>
-                <aggregate>true</aggregate>
-                <tags>
-                  <tag>TODO</tag>
-                  <tag>FIXME</tag>
-                  <tag>XXX</tag>
-                </tags>
-              </configuration>
-            </plugin>
-            <plugin>
-              <groupId>org.apache.maven.plugins</groupId>
-              <artifactId>maven-changelog-plugin</artifactId>
-              <version>2.3</version>
-            </plugin>
-            <plugin>
-              <groupId>org.apache.maven.plugins</groupId>
-              <artifactId>maven-surefire-report-plugin</artifactId>
-              <version>2.19.1</version>
-              <configuration>
-                <testFailureIgnore>true</testFailureIgnore>
-              </configuration>
-              <reportSets>
-                <reportSet>
-                  <reports>
-                    <report>report-only</report>
-                  </reports>
-                </reportSet>
-              </reportSets>
-            </plugin>
-            <plugin>
-              <groupId>org.codehaus.mojo</groupId>
-              <artifactId>findbugs-maven-plugin</artifactId>
-              <version>3.0.4</version>
-              <configuration>
-                <xmlOutput>true</xmlOutput>
-                <excludeFilterFile>findbugs-exclude.xml</excludeFilterFile>
-              </configuration>
-            </plugin>
-            <plugin>
-              <groupId>org.apache.maven.plugins</groupId>
-              <artifactId>maven-checkstyle-plugin</artifactId>
-              <version>2.17</version>
-              <configuration>
-                <configLocation>checkstyle.xml</configLocation>
-              </configuration>
-              <reportSets>
-                <reportSet>
-                  <reports>
-                    <report>checkstyle</report>
-                  </reports>
-                </reportSet>
-              </reportSets>
-            </plugin>
-          </reportPlugins>
-        </configuration>
+        <version>3.6</version>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -232,6 +168,81 @@
       </extension>
     </extensions>
   </build>
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-project-info-reports-plugin</artifactId>
+        <version>2.9</version>
+        <configuration>
+          <dependencyLocationsEnabled>
+          false</dependencyLocationsEnabled>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>taglist-maven-plugin</artifactId>
+        <version>2.4</version>
+        <configuration>
+          <aggregate>true</aggregate>
+          <tags>
+            <tag>TODO</tag>
+            <tag>FIXME</tag>
+            <tag>XXX</tag>
+          </tags>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-changelog-plugin</artifactId>
+        <version>2.3</version>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-report-plugin</artifactId>
+        <version>2.20</version>
+        <configuration>
+          <testFailureIgnore>true</testFailureIgnore>
+        </configuration>
+        <reportSets>
+          <reportSet>
+            <reports>
+              <report>report-only</report>
+            </reports>
+          </reportSet>
+        </reportSets>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>findbugs-maven-plugin</artifactId>
+        <version>3.0.4</version>
+        <configuration>
+          <xmlOutput>true</xmlOutput>
+          <excludeFilterFile>
+          findbugs-exclude.xml</excludeFilterFile>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <version>2.17</version>
+        <configuration>
+          <configLocation>checkstyle.xml</configLocation>
+        </configuration>
+        <reportSets>
+          <reportSet>
+            <reports>
+              <report>checkstyle</report>
+            </reports>
+          </reportSet>
+        </reportSets>
+      </plugin>
+    </plugins>
+  </reporting>
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
