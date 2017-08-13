@@ -12,23 +12,18 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
   <inceptionYear>2012</inceptionYear>
   <scm>
     <url>https://github.com/kifj/jboss-syslog</url>
-    <connection>
-    scm:git:https://github.com/kifj/jboss-syslog.git</connection>
+    <connection>scm:git:https://github.com/kifj/jboss-syslog.git</connection>
   </scm>
   <licenses>
     <license>
-      <name>GNU General Public License, version 2, with the
-      Classpath Exception</name>
+      <name>GNU General Public License, version 2, with the Classpath Exception</name>
       <distribution>repo</distribution>
-      <url>
-      http://www.gnu.org/licenses/gpl-2.0-standalone.html</url>
+      <url>http://www.gnu.org/licenses/gpl-2.0-standalone.html</url>
     </license>
   </licenses>
   <properties>
-    <project.build.sourceEncoding>
-    UTF-8</project.build.sourceEncoding>
-    <project.reporting.outputEncoding>
-    UTF-8</project.reporting.outputEncoding>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <maven.compiler.target>1.7</maven.compiler.target>
     <maven.compiler.source>1.7</maven.compiler.source>
     <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
@@ -53,8 +48,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
     <site>
       <id>x1-site</id>
       <name>X1 Maven Site</name>
-      <url>
-      dav:http://www.x1/nexus/content/repositories/x1-site/${project.groupId}/${project.artifactId}/${project.version}</url>
+      <url>dav:http://www.x1/nexus/content/repositories/x1-site/${project.groupId}/${project.artifactId}/${project.version}</url>
     </site>
     <repository>
       <id>x1-repo</id>
@@ -62,8 +56,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
     </repository>
     <snapshotRepository>
       <id>x1-snapshot-repo</id>
-      <url>
-      http://www.x1/nexus/content/repositories/x1-snapshot-repo</url>
+      <url>http://www.x1/nexus/content/repositories/x1-snapshot-repo</url>
     </snapshotRepository>
   </distributionManagement>
   <organization>
@@ -91,7 +84,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
     <plugins>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.5</version>
+        <version>3.6.2</version>
       </plugin>
       <plugin>
         <artifactId>maven-assembly-plugin</artifactId>
@@ -121,7 +114,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
-        <version>0.7.8</version>
+        <version>0.7.9</version>
         <executions>
           <execution>
             <id>prepare-agent</id>
@@ -144,8 +137,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
         <version>2.20</version>
         <configuration>
           <systemPropertyVariables>
-            <jacoco-agent.destfile>
-            target/jacoco.exec</jacoco-agent.destfile>
+            <jacoco-agent.destfile>target/jacoco.exec</jacoco-agent.destfile>
           </systemPropertyVariables>
         </configuration>
       </plugin>
@@ -175,8 +167,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
         <artifactId>maven-project-info-reports-plugin</artifactId>
         <version>2.9</version>
         <configuration>
-          <dependencyLocationsEnabled>
-          false</dependencyLocationsEnabled>
+          <dependencyLocationsEnabled>false</dependencyLocationsEnabled>
         </configuration>
       </plugin>
       <plugin>
@@ -222,8 +213,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
         <version>3.0.4</version>
         <configuration>
           <xmlOutput>true</xmlOutput>
-          <excludeFilterFile>
-          findbugs-exclude.xml</excludeFilterFile>
+          <excludeFilterFile>findbugs-exclude.xml</excludeFilterFile>
         </configuration>
       </plugin>
       <plugin>
