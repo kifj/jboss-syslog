@@ -34,8 +34,6 @@
 package x1.jboss.syslog;
 
 import java.net.InetSocketAddress;
-import java.net.SocketException;
-import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -104,10 +102,8 @@ public abstract class Syslog {
 
   /**
    * Log to a particular log host.
-   *
-   * @throws SocketException
    */
-  public Syslog(InetSocketAddress destination) throws UnknownHostException, SocketException {
+  public Syslog(InetSocketAddress destination) {
     this.destination = destination;
   }
 

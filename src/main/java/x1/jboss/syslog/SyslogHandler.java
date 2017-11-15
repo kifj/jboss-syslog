@@ -49,11 +49,6 @@ import java.util.logging.Logger;
  */
 public class SyslogHandler extends Handler {
   private Syslog sysLogger = null;
-  // private Thread pump = null;
-  // private BooleanLatch done = new BooleanLatch();
-  // private BlockingQueue<LogRecord> pendingRecords = new
-  // ArrayBlockingQueue<LogRecord>(
-  // 5000);
   private String loghost = "localhost";
   private String protocol = "udp";
   private int port = 514;
@@ -64,17 +59,18 @@ public class SyslogHandler extends Handler {
   private int facilityInt = Syslog.DAEMON;
   private Level level = Level.INFO;
 
+  static {
+    try {
+      InetAddress addr = InetAddress.getLocalHost();
+      hostname = addr.getHostName();
+    } catch (UnknownHostException e) {
+      hostname = "localhost";
+    }
+  }
+  
   public SyslogHandler() {
     super();
     setFormatter(new SyslogFormatter());
-    if (hostname == null) {
-      try {
-        InetAddress addr = InetAddress.getLocalHost();
-        hostname = addr.getHostName();
-      } catch (UnknownHostException e) {
-        hostname = "localhost";
-      }
-    }
   }
 
   private boolean init() {
