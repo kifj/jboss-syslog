@@ -28,7 +28,6 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <maven.compiler.target>1.7</maven.compiler.target>
     <maven.compiler.source>1.7</maven.compiler.source>
-    <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
   </properties>
   <ciManagement>
     <system>Jenkins</system>
@@ -61,6 +60,10 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
       <url>http://www.x1/nexus/content/repositories/x1-snapshot-repo</url>
     </snapshotRepository>
   </distributionManagement>
+  <issueManagement>
+    <system>GitHub</system>
+    <url>https://github.com/kifj/jboss-syslog/issues</url>
+  </issueManagement>
   <organization>
     <name>X1</name>
     <url>https://www.x1</url>
@@ -109,14 +112,14 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
         </executions>
       </plugin>
       <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>findbugs-maven-plugin</artifactId>
-        <version>3.0.5</version>
+        <groupId>com.github.spotbugs</groupId>
+        <artifactId>spotbugs-maven-plugin</artifactId>
+        <version>3.1.5</version>
       </plugin>
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
-        <version>0.8.0</version>
+        <version>0.8.1</version>
         <executions>
           <execution>
             <id>prepare-agent</id>
@@ -146,7 +149,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-site-plugin</artifactId>
-        <version>3.6</version>
+        <version>3.7.1</version>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -167,7 +170,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-project-info-reports-plugin</artifactId>
-        <version>2.9</version>
+        <version>3.0.0</version>
         <configuration>
           <dependencyLocationsEnabled>false</dependencyLocationsEnabled>
         </configuration>
@@ -210,9 +213,9 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
         </reportSets>
       </plugin>
       <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>findbugs-maven-plugin</artifactId>
-        <version>3.0.5</version>
+        <groupId>com.github.spotbugs</groupId>
+        <artifactId>spotbugs-maven-plugin</artifactId>
+        <version>3.1.5</version>
         <configuration>
           <xmlOutput>true</xmlOutput>
           <excludeFilterFile>findbugs-exclude.xml</excludeFilterFile>
@@ -233,8 +236,21 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
           </reportSet>
         </reportSets>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-changes-plugin</artifactId>
+        <version>2.12.1</version>
+        <reportSets>
+          <reportSet>
+            <reports>
+              <report>github-report</report>
+            </reports>
+          </reportSet>
+        </reportSets>
+      </plugin>
     </plugins>
   </reporting>
+  
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
