@@ -114,12 +114,12 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
       <plugin>
         <groupId>com.github.spotbugs</groupId>
         <artifactId>spotbugs-maven-plugin</artifactId>
-        <version>3.1.5</version>
+        <version>3.1.6</version>
       </plugin>
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
-        <version>0.8.1</version>
+        <version>0.8.2</version>
         <executions>
           <execution>
             <id>prepare-agent</id>
@@ -139,7 +139,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
-        <version>2.21.0</version>
+        <version>2.22.0</version>
         <configuration>
           <systemPropertyVariables>
             <jacoco-agent.destfile>target/jacoco.exec</jacoco-agent.destfile>
@@ -200,7 +200,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-report-plugin</artifactId>
-        <version>2.21.0</version>
+        <version>2.22.0</version>
         <configuration>
           <testFailureIgnore>true</testFailureIgnore>
         </configuration>
@@ -215,7 +215,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
       <plugin>
         <groupId>com.github.spotbugs</groupId>
         <artifactId>spotbugs-maven-plugin</artifactId>
-        <version>3.1.5</version>
+        <version>3.1.6</version>
         <configuration>
           <xmlOutput>true</xmlOutput>
           <excludeFilterFile>findbugs-exclude.xml</excludeFilterFile>
