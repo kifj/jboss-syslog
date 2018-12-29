@@ -215,7 +215,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
       <plugin>
         <groupId>com.github.spotbugs</groupId>
         <artifactId>spotbugs-maven-plugin</artifactId>
-        <version>3.1.6</version>
+        <version>3.1.10</version>
         <configuration>
           <xmlOutput>true</xmlOutput>
           <excludeFilterFile>findbugs-exclude.xml</excludeFilterFile>
