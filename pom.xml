@@ -1,9 +1,11 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
   <groupId>x1.jboss</groupId>
   <artifactId>jboss-syslog</artifactId>
-  <version>1.0.4-SNAPSHOT</version>
+  <version>1.0.3-SNAPSHOT</version>
   <name>jboss-syslog</name>
   <description>Syslog appender for JBoss AS 7</description>
   <url>https://github.com/kifj/jboss-syslog</url>
@@ -26,7 +28,6 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <maven.compiler.target>1.7</maven.compiler.target>
     <maven.compiler.source>1.7</maven.compiler.source>
-    <doclint>none</doclint>
   </properties>
   <ciManagement>
     <system>Jenkins</system>
