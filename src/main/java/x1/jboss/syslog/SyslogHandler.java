@@ -169,6 +169,7 @@ public class SyslogHandler extends Handler {
 
   public void setLoghost(String loghost) {
     this.loghost = loghost;
+    this.sysLogger = null;
   }
 
   public String getProtocol() {
