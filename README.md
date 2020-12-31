@@ -1,3 +1,5 @@
+[![Actions Status](https://github.com/kifj/jboss-syslog/workflows/Java%20CI/badge.svg)](https://github.com/kifj/jboss-syslog/actions) ![Licence](https://img.shields.io/github/license/kifj/jboss-syslog) ![Issues](https://img.shields.io/github/issues/kifj/jboss-syslog) ![Stars](https://img.shields.io/github/stars/kifj/jboss-syslog)
+
 jboss-syslog
 ============
 
