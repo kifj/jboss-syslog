@@ -7,7 +7,7 @@ Syslog facility for JBoss AS 7.1
 
 Please note that JBoss EAP 6.1 contains a syslog module, which makes this addition obsolete.
 
-Compile the jar file with maven: `mvn package`
+Compile the jar file with maven: `mvn package`. If you need to support Java 6, change the compiler settings in the pom.
 
 Unzip the archive created in the `target/zip` folder at `$JBOSS_HOME/modules`.
 
