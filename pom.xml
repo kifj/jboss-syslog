@@ -11,7 +11,6 @@
   <scm>
     <url>https://github.com/kifj/jboss-syslog</url>
     <connection>scm:git:git@github.com/kifj/jboss-syslog.git</connection>
-    <developerConnection>scm:git:git@github.com:kifj/jboss-syslog.git</developerConnection>
     <tag>HEAD</tag>
   </scm>
   <licenses>
