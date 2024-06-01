@@ -1,22 +1,47 @@
-node {
-  def mvnHome = tool 'Maven-3.8'
-  env.JAVA_HOME = tool 'JDK-1.8'
-   
-  stage('Checkout') {
-    checkout scm
+pipeline {
+  agent any
+  tools {
+    maven 'Maven-3.9'
   }
-
-  stage('Build') {
-    sh "${mvnHome}/bin/mvn clean install"
+  stages {
+    stage('Checkout') {
+      steps {
+        checkout scm
+      }
+    }
+    stage('Build & Publish') {
+      agent {
+        docker {
+          image 'registry.x1/j7beck/x1-maven3:jdk-1.8.0'
+          args '-v $HOME/.m2/repository:/var/lib/jenkins/.m2/repository'
+	  reuseNode true
+        }
+      }
+      stages {
+        stage('Build') {
+          steps {
+            sh '$MAVEN_HOME/bin/mvn -B clean package'
+          }
+        }
+        stage('Publish') {
+          steps {
+            sh '$MAVEN_HOME/bin/mvn -B deploy site-deploy -DskipTests'
+          }
+        }
+      }
+    }
+    stage('Sonar') {
+      tools {
+        jdk 'JDK-17'
+      }
+      steps {
+        sh 'mvn sonar:sonar -DskipTests -Dsonar.java.coveragePlugin=jacoco -Dsonar.jacoco.reportPath=target/jacoco.exec -Dsonar.host.url=https://www.x1/sonar'
+      }
+    }
   }
-
-  stage('Publish') {
-    sh "${mvnHome}/bin/mvn deploy site-deploy -DskipTests"
-  }
-  
-  stage('Sonar') {
-    withEnv(["JAVA_HOME=${tool 'JDK-17'}"]) {
-      sh "${mvnHome}/bin/mvn sonar:sonar -DskipTests -Dsonar.java.coveragePlugin=jacoco -Dsonar.jacoco.reportPath=target/jacoco.exec -Dsonar.host.url=https://www.x1/sonar"
+  post {
+    always {
+      recordIssues tools: [spotBugs(pattern: 'target/spotbugsXml.xml')]
     }
   }
 }
